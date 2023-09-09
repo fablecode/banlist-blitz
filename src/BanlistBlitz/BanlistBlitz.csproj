@@ -1,12 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>BanlistBlitz</Title>
-    <Authors>Fablecode</Authors>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Fablecode</Authors>
+    <Description>Banlist Blitz is your ultimate companion for staying on top of the ever-changing Yu-Gi-Oh! banlists. Whether you're a duelist, a developer, or just a fan of the game, this tool is designed to make your Yu-Gi-Oh! experience more exciting and accessible.</Description>
+    <Title>BanlistBlitz</Title>
+    <Copyright>Copyright Fablecode</Copyright>
+    <PackageTags>
+      Yu-Gi-Oh!; Card Game; Banlist; Data Retrieval; .NET; API; Metagame; Real-Time Updates; Duelists; C#; Deck Building; Trading Card Game; Game Development; Developer Tools; Historical Data; Yu-Gi-Oh! Community; Card Restrictions; Open Source; Card Game Tools; Data Analysis
+    </PackageTags>
+    <PackageIcon>logo_128x128.png</PackageIcon>
+    <RepositoryUrl>https://github.com/fablecode/banlist-blitz</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\logo\logo_128x128.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
 </Project>

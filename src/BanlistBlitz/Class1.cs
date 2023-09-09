@@ -1,6 +1,11 @@
 ﻿namespace BanlistBlitz
 {
-    public class Class1
+    public interface IBanlistBlitz
+    {
+        
+    }
+
+    public class BanlistBlitz : IBanlistBlitz
     {
 
     }
