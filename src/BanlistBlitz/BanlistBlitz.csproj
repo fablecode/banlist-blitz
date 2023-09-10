@@ -24,4 +24,13 @@
     <None Include="..\..\assets\logo\logo_128x128.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Enumerations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" Version="7.0.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.53" />
+  </ItemGroup>
+
 </Project>
