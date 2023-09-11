@@ -3,7 +3,7 @@
 public class Banlist
 {
     public string Name { get; set; } = null!;
-    public virtual IFormat Format { get; set; } = null!;
+    public virtual Format Format { get; set; } = null!;
     public DateTime ReleaseDate { get; set; }
     public ICollection<Card>? Banned { get; set; }
     public ICollection<Card>? Limited { get; set; }

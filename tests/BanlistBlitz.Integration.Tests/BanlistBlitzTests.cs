@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace BanlistBlitz.Integration.Tests
 {
     [TestFixture]
-    public class Class1
+    public class BanlistBlitzTests
     {
         private BanlistBlitz _sut = null!;
 
