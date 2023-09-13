@@ -72,7 +72,11 @@ public class TcgFormatProcessor : IFormatProcessor
             datatable.Rows.Add(rowData);
         }
 
-        var banlist = new Banlist();
+        var banlist = new TcgBanlist
+        {
+            TraditionalFormat = null,
+            AdvancedFormat = null
+        };
 
         banlist.Format = Format.Tcg;
         banlist.Name = HtmlEntity.DeEntitize(latestBanlistDocument
@@ -83,6 +87,17 @@ public class TcgFormatProcessor : IFormatProcessor
             .SelectSingleNode("//div[contains(@class, 'entry-content')]/h3")
             .InnerText
             .TrimStart("Effective from ".ToCharArray()));
+
+        banlist.AdvancedFormat = new CardRestriction
+        {
+            Banned = (from card in datatable.AsEnumerable()
+                     where card.Field<string>("Advanced Format") == "Forbidden"
+                         select new Card
+                         {
+                             Name = card.Field<string>("Card Name")
+                         })
+                .ToList()
+        }
 
         //foreach (var table in latestDocument.DocumentNode.SelectNodes("//table[contains(@class, 'cardlist')]").Where(t => t.Descendants("tr").Any()))
         //{
@@ -101,7 +116,8 @@ public class TcgFormatProcessor : IFormatProcessor
         //    dr[r.Header] = r.CellText;
         //}
 
-        return banlist;
+        return banlist
+            ;
     }
 
     public bool Handles(Format format)
