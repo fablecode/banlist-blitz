@@ -9,3 +9,8 @@ public abstract class Card
     public string Description { get; set; }
     public abstract Category CardType { get; }
 }
+
+public abstract class BanlistCard : Card
+{
+    public string? Remarks { get; set; }
+}

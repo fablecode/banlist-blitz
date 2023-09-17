@@ -4,8 +4,13 @@ using Type = BanlistBlitz.Domain.Enumerations.Type;
 
 namespace BanlistBlitz.Domain;
 
-public sealed class MonsterCard : Card
+public sealed class MonsterCard : BanlistCard
 {
+    public MonsterCard(string name)
+    : this(Attribute.Dark, new List<SubCategory>(), new List<Type>())
+    {
+        Name = name;
+    }
     public MonsterCard(Attribute attribute, List<SubCategory> subCategories, List<Type> types)
     {
         Attribute = attribute;

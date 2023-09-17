@@ -1,4 +1,5 @@
 ﻿using BanlistBlitz.Domain;
+using BanlistBlitz.Processors;
 using FluentAssertions;
 using NUnit.Framework;
 

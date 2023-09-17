@@ -2,7 +2,7 @@
 
 namespace BanlistBlitz.Domain;
 
-public sealed class SpellCard : Card
+public sealed class SpellCard : BanlistCard
 {
     public SpellCard(SubCategory subCategory)
     {
