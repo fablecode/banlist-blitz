@@ -70,4 +70,13 @@ public static class CardHelper
             Remarks = remarks
         };
     }
+
+    public static BanlistCard FromOcgDataRow(DataRow cardRow)
+    {
+        if (cardRow == null)
+            throw new ArgumentNullException(nameof(cardRow));
+
+        var cardName = cardRow.Field<string>("English Name") ?? throw new CardNameException(cardRow);
+        var updates = cardRow.Field<string>("Updates");
+    }
 }
