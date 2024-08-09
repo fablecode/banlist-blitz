@@ -37,50 +37,49 @@ public class TcgFormatProcessor : IFormatProcessor
         }
 
         var banlist = new TcgBanlist
-        {
-            AdvancedFormat = null!,
-            Format = Format.Tcg,
-            Name = HtmlEntity.DeEntitize(latestBanlistDocument
+        (
+            HtmlEntity.DeEntitize(latestBanlistDocument
                 .DocumentNode
                 .SelectSingleNode("//header/h1[contains(@class, 'entry-title')]").InnerText),
-            ReleaseDate = DateTime.Parse(latestBanlistDocument
+            Format.Tcg,
+            DateTime.Parse(latestBanlistDocument
                 .DocumentNode
                 .SelectSingleNode("//div[contains(@class, 'entry-content')]/h3")
                 .InnerText
                 .TrimStart("Effective from ".ToCharArray()))
-        };
+        );
 
-        banlist.AdvancedFormat = new CardRestriction
-        {
-            Banned = 
-                (
-                    from card in datatable.AsEnumerable()
-                    where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Forbidden"
-                    select CardHelper.FromDataRow(card)
-                )
-                .ToList(),
-            Limited =
-                (
-                    from card in datatable.AsEnumerable()
-                    where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Limited"
-                    select CardHelper.FromDataRow(card)
-                )
-                .ToList(),
-            SemiLimited =
-                (
-                    from card in datatable.AsEnumerable()
-                    where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Semi-Limited"
-                    select CardHelper.FromDataRow(card)
-                )
-                .ToList(),
-            Unlimited =
-                (
-                    from card in datatable.AsEnumerable()
-                    where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "No Longer On List"
-                    select CardHelper.FromDataRow(card)
-                )
-                .ToList(),
-        };
+        banlist.Banned =
+            (
+                from card in datatable.AsEnumerable()
+                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Forbidden"
+                select CardHelper.FromDataRow(card)
+            )
+            .ToList();
+
+        banlist.Limited =
+            (
+                from card in datatable.AsEnumerable()
+                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Limited"
+                select CardHelper.FromDataRow(card)
+            )
+            .ToList();
+
+        banlist.SemiLimited =
+            (
+                from card in datatable.AsEnumerable()
+                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Semi-Limited"
+                select CardHelper.FromDataRow(card)
+            )
+            .ToList();
+
+        banlist.Unlimited =
+            (
+                from card in datatable.AsEnumerable()
+                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "No Longer On List"
+                select CardHelper.FromDataRow(card)
+            )
+            .ToList();
 
         return banlist;
     }

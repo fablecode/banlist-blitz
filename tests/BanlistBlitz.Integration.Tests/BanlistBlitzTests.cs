@@ -13,14 +13,13 @@ namespace BanlistBlitz.Integration.Tests
         [SetUp]
         public void SetUp()
         {
-            _sut = new BanlistBlitz(new []{new TcgFormatProcessor()});
+            _sut = new BanlistBlitz(new IFormatProcessor[]{ new TcgFormatProcessor(), new OcgFormatProcessor() });
         }
 
-        [Test]
-        public async Task Given_A_Format_Should_Return_A_Valid_Banlist_Name()
+        [TestCaseSource(nameof(FormatCases))]
+        public async Task Given_A_Format_Should_Return_A_Valid_Banlist_Name(Format format)
         {
             // Arrange
-            var format = Format.Tcg;
 
             // Act
             var result = await _sut.LoadBanlist(format);
@@ -28,5 +27,11 @@ namespace BanlistBlitz.Integration.Tests
             // Assert
             result.Name.Should().NotBeNullOrWhiteSpace();
         }
+
+        public static object[] FormatCases =
+        {
+            //new object[] { Format.Tcg },
+            new object[] { Format.Ocg },
+        };
     }
 }

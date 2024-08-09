@@ -2,7 +2,14 @@
 
 public  abstract class Banlist
 {
-    public string Name { get; set; } = null!;
-    public virtual Format Format { get; set; } = null!;
-    public DateTime ReleaseDate { get; set; }
+    protected Banlist(string name, Format format, DateTime releaseDate)
+    {
+        Name = name;
+        Format = format;
+        ReleaseDate = releaseDate;
+    }
+
+    public string Name { get; }
+    public Format Format { get; }
+    public DateTime ReleaseDate { get; }
 }

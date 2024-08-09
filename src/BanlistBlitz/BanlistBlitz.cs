@@ -7,6 +7,12 @@ public class BanlistBlitz : IBanlistBlitz
 {
     private readonly IEnumerable<IFormatProcessor> _formatProcessors;
 
+    public BanlistBlitz()
+        : this(new IFormatProcessor[] { new TcgFormatProcessor(), new OcgFormatProcessor() })
+    {
+        
+    }
+
     public BanlistBlitz(IEnumerable<IFormatProcessor> formatProcessors)
     {
         _formatProcessors = formatProcessors;
