@@ -7,15 +7,15 @@ namespace BanlistBlitz.Processors;
 
 public class TcgFormatProcessor : IFormatProcessor
 {
-    private string url => new("https://www.yugioh-card.com/en/limited/");
+    private static string BanlistUrl => new("https://www.yugioh-card.com/en/limited/");
 
     public async Task<Banlist> LatestAsync()
     {
         var web = new HtmlWeb();
-        var document = await web.LoadFromWebAsync(url);
+        var document = await web.LoadFromWebAsync(BanlistUrl);
 
         var linkHtmlNode = document.DocumentNode.SelectSingleNode("//a[contains(@class, 'wp-block-button__link has-text-color has-background')]");
-        var banlistLink = new Uri(new Uri(new Uri(url).GetLeftPart(UriPartial.Path)), linkHtmlNode.Attributes["href"].Value);
+        var banlistLink = new Uri(new Uri(new Uri(BanlistUrl).GetLeftPart(UriPartial.Path)), linkHtmlNode.Attributes["href"].Value);
 
         var latestBanlistDocument = await web.LoadFromWebAsync(banlistLink.AbsoluteUri);
 
