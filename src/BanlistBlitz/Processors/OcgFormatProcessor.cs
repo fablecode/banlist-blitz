@@ -7,6 +7,9 @@ namespace BanlistBlitz.Processors;
 
 public sealed class OcgFormatProcessor : IFormatProcessor
 {
+    private const string Japanese = "Japanese Name";
+    private const string English = "English Name";
+    private const string Updates = "Updates";
     private static string BanlistUrl => new("https://www.yugioh-card.com/hk/event/rules_guides/forbidden_cardlist.php");
     public async Task<Banlist> LatestAsync()
     {
@@ -69,28 +72,28 @@ public sealed class OcgFormatProcessor : IFormatProcessor
         banlist.Banned =
             (
                 from card in forbiddenCards.AsEnumerable()
-                select CardHelper.FromOcgDataRow(card)
+                select FromOcgDataRow(card)
             )
             .ToList();
 
         banlist.Limited =
             (
                 from card in limitedCards.AsEnumerable()
-                select CardHelper.FromOcgDataRow(card)
+                select FromOcgDataRow(card)
             )
             .ToList();
 
         banlist.SemiLimited =
             (
                 from card in semiLimitedCards.AsEnumerable()
-                select CardHelper.FromOcgDataRow(card)
+                select FromOcgDataRow(card)
             )
             .ToList();
 
         banlist.Unlimited =
             (
                 from card in unlimitedCards.AsEnumerable()
-                select CardHelper.FromOcgDataRow(card)
+                select FromOcgDataRow(card)
             )
             .ToList();
         
@@ -101,9 +104,9 @@ public sealed class OcgFormatProcessor : IFormatProcessor
         {
             return new[]
             {
-                new DataColumn("Japanese Name", typeof(string)),
-                new DataColumn("English Name", typeof(string)),
-                new DataColumn("Updates", typeof(string))
+                new DataColumn(Japanese, typeof(string)),
+                new DataColumn(English, typeof(string)),
+                new DataColumn(Updates, typeof(string))
             };
         }
 
@@ -120,4 +123,23 @@ public sealed class OcgFormatProcessor : IFormatProcessor
     {
         return format == Format.Ocg;
     }
+
+    #region Helpers
+    public static OcgBanlistCard FromOcgDataRow(DataRow cardRow)
+    {
+        if (cardRow == null)
+            throw new ArgumentNullException(nameof(cardRow));
+
+        var japaneseCardName = cardRow.Field<string>(Japanese) ?? string.Empty;
+        var englishCardName = cardRow.Field<string>(English) ?? string.Empty;
+        var updates = cardRow.Field<string>(Updates)?.Trim('\r', '\n');
+
+        var englishCardNameTitleCased =
+            HtmlEntity.DeEntitize(Thread.CurrentThread.CurrentCulture.TextInfo.
+                ToTitleCase(englishCardName.ToLower().RemoveExtraSpaceBetweenTwoWords()));
+
+        return new OcgBanlistCard(japaneseCardName, englishCardNameTitleCased, updates);
+    }
+
+    #endregion
 }

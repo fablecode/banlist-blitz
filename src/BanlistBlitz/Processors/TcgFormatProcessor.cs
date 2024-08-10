@@ -7,6 +7,11 @@ namespace BanlistBlitz.Processors;
 
 public class TcgFormatProcessor : IFormatProcessor
 {
+    private const string CardType = "Card Type";
+    private const string CardName = "Card Name";
+    private const string AdvancedFormat = "Advanced Format";
+    private const string TraditionalFormat = "Traditional Format";
+    private const string Remarks = "Remarks";
     private static string BanlistUrl => new("https://www.yugioh-card.com/en/limited/");
 
     public async Task<Banlist> LatestAsync()
@@ -25,11 +30,11 @@ public class TcgFormatProcessor : IFormatProcessor
             select row.SelectNodes("td").Select(td => td.InnerText).ToArray<object>();
 
         var datatable = new DataTable("TcgBanlist");
-        datatable.Columns.Add("Card Type", typeof(string));
-        datatable.Columns.Add("Card Name", typeof(string));
-        datatable.Columns.Add("Advanced Format", typeof(string));
-        datatable.Columns.Add("Traditional Format", typeof(string));
-        datatable.Columns.Add("Remarks", typeof(string));
+        datatable.Columns.Add(CardType, typeof(string));
+        datatable.Columns.Add(CardName, typeof(string));
+        datatable.Columns.Add(AdvancedFormat, typeof(string));
+        datatable.Columns.Add(TraditionalFormat, typeof(string));
+        datatable.Columns.Add(Remarks, typeof(string));
 
         foreach (var rowData in query)
         {
@@ -52,32 +57,32 @@ public class TcgFormatProcessor : IFormatProcessor
         banlist.Banned =
             (
                 from card in datatable.AsEnumerable()
-                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Forbidden"
-                select CardHelper.FromDataRow(card)
+                where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Forbidden", StringComparison.OrdinalIgnoreCase)
+                select FromDataRow(card)
             )
             .ToList();
 
         banlist.Limited =
             (
                 from card in datatable.AsEnumerable()
-                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Limited"
-                select CardHelper.FromDataRow(card)
+                where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Limited", StringComparison.OrdinalIgnoreCase)
+                select FromDataRow(card)
             )
             .ToList();
 
         banlist.SemiLimited =
             (
                 from card in datatable.AsEnumerable()
-                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "Semi-Limited"
-                select CardHelper.FromDataRow(card)
+                where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Semi-Limited", StringComparison.OrdinalIgnoreCase)
+                select FromDataRow(card)
             )
             .ToList();
 
         banlist.Unlimited =
             (
                 from card in datatable.AsEnumerable()
-                where card.Field<string>("Advanced Format").RemoveExtraSpaceBetweenTwoWords() == "No Longer On List"
-                select CardHelper.FromDataRow(card)
+                where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "No Longer On List", StringComparison.OrdinalIgnoreCase)
+                select FromDataRow(card)
             )
             .ToList();
 
@@ -88,4 +93,25 @@ public class TcgFormatProcessor : IFormatProcessor
     {
         return format == Format.Tcg;
     }
+
+    #region Helpers
+    public static TcgBanlistCard FromDataRow(DataRow cardRow)
+    {
+        if (cardRow == null)
+            throw new ArgumentNullException(nameof(cardRow));
+
+        var cardName = cardRow.Field<string>("Card Name") ?? string.Empty;
+        var cardType = cardRow.Field<string>("Card Type") ?? string.Empty;
+        var advancedFormat = cardRow.Field<string>("Advanced Format") ?? string.Empty;
+        var traditionalFormat = cardRow.Field<string>("Traditional Format") ?? string.Empty;
+        var remarks = cardRow.Field<string>("Remarks");
+
+        var cardNameTitleCased =
+            HtmlEntity.DeEntitize(Thread.CurrentThread.CurrentCulture.TextInfo.
+                ToTitleCase(cardName.ToLower().RemoveExtraSpaceBetweenTwoWords()));
+
+        return new TcgBanlistCard(cardType.Split('/'), cardNameTitleCased, advancedFormat, traditionalFormat, remarks);
+
+    } 
+    #endregion
 }
