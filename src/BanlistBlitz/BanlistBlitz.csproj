@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.SmartEnum" Version="7.0.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.53" />
   </ItemGroup>
 
