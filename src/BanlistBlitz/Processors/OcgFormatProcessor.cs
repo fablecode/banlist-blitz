@@ -1,4 +1,5 @@
 using BanlistBlitz.Domain;
+using BanlistBlitz.Exceptions;
 using BanlistBlitz.Helpers;
 using HtmlAgilityPack;
 using System.Data;
@@ -130,8 +131,8 @@ public sealed class OcgFormatProcessor : IFormatProcessor
         if (cardRow == null)
             throw new ArgumentNullException(nameof(cardRow));
 
-        var japaneseCardName = cardRow.Field<string>(Japanese) ?? string.Empty;
-        var englishCardName = cardRow.Field<string>(English) ?? string.Empty;
+        var japaneseCardName = cardRow.Field<string>(Japanese) ?? throw new CardNameException(cardRow);
+        var englishCardName = cardRow.Field<string>(English) ?? throw new CardNameException(cardRow);
         var updates = cardRow.Field<string>(Updates)?.Trim('\r', '\n');
 
         var englishCardNameTitleCased =

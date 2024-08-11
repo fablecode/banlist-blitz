@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using BanlistBlitz.Domain;
+using BanlistBlitz.Exceptions;
 using BanlistBlitz.Helpers;
 using HtmlAgilityPack;
 
@@ -58,7 +59,7 @@ public class TcgFormatProcessor : IFormatProcessor
             (
                 from card in datatable.AsEnumerable()
                 where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Forbidden", StringComparison.OrdinalIgnoreCase)
-                select FromDataRow(card)
+                select FromTcgDataRow(card)
             )
             .ToList();
 
@@ -66,7 +67,7 @@ public class TcgFormatProcessor : IFormatProcessor
             (
                 from card in datatable.AsEnumerable()
                 where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Limited", StringComparison.OrdinalIgnoreCase)
-                select FromDataRow(card)
+                select FromTcgDataRow(card)
             )
             .ToList();
 
@@ -74,7 +75,7 @@ public class TcgFormatProcessor : IFormatProcessor
             (
                 from card in datatable.AsEnumerable()
                 where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "Semi-Limited", StringComparison.OrdinalIgnoreCase)
-                select FromDataRow(card)
+                select FromTcgDataRow(card)
             )
             .ToList();
 
@@ -82,7 +83,7 @@ public class TcgFormatProcessor : IFormatProcessor
             (
                 from card in datatable.AsEnumerable()
                 where string.Equals(card.Field<string>(AdvancedFormat).RemoveExtraSpaceBetweenTwoWords(), "No Longer On List", StringComparison.OrdinalIgnoreCase)
-                select FromDataRow(card)
+                select FromTcgDataRow(card)
             )
             .ToList();
 
@@ -95,15 +96,15 @@ public class TcgFormatProcessor : IFormatProcessor
     }
 
     #region Helpers
-    public static TcgBanlistCard FromDataRow(DataRow cardRow)
+    public static TcgBanlistCard FromTcgDataRow(DataRow cardRow)
     {
         if (cardRow == null)
             throw new ArgumentNullException(nameof(cardRow));
 
-        var cardName = cardRow.Field<string>(CardName) ?? string.Empty;
-        var cardType = cardRow.Field<string>(CardType) ?? string.Empty;
-        var advancedFormat = cardRow.Field<string>(AdvancedFormat) ?? string.Empty;
-        var traditionalFormat = cardRow.Field<string>(TraditionalFormat) ?? string.Empty;
+        var cardName = cardRow.Field<string>(CardName) ?? throw new CardNameException(cardRow);
+        var cardType = cardRow.Field<string>(CardType) ?? throw new CardTypeException(cardRow);
+        var advancedFormat = cardRow.Field<string>(AdvancedFormat) ?? throw new TcgAdvancedFormatException(cardRow);
+        var traditionalFormat = cardRow.Field<string>(TraditionalFormat) ?? throw new TcgAdvancedTraditionalException(cardRow);
         var remarks = cardRow.Field<string>(Remarks);
 
         var cardNameTitleCased =
