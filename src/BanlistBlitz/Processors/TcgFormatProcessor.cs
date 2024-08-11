@@ -100,11 +100,11 @@ public class TcgFormatProcessor : IFormatProcessor
         if (cardRow == null)
             throw new ArgumentNullException(nameof(cardRow));
 
-        var cardName = cardRow.Field<string>("Card Name") ?? string.Empty;
-        var cardType = cardRow.Field<string>("Card Type") ?? string.Empty;
-        var advancedFormat = cardRow.Field<string>("Advanced Format") ?? string.Empty;
-        var traditionalFormat = cardRow.Field<string>("Traditional Format") ?? string.Empty;
-        var remarks = cardRow.Field<string>("Remarks");
+        var cardName = cardRow.Field<string>(CardName) ?? string.Empty;
+        var cardType = cardRow.Field<string>(CardType) ?? string.Empty;
+        var advancedFormat = cardRow.Field<string>(AdvancedFormat) ?? string.Empty;
+        var traditionalFormat = cardRow.Field<string>(TraditionalFormat) ?? string.Empty;
+        var remarks = cardRow.Field<string>(Remarks);
 
         var cardNameTitleCased =
             HtmlEntity.DeEntitize(Thread.CurrentThread.CurrentCulture.TextInfo.
