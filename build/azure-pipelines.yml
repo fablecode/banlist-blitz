@@ -28,20 +28,21 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+
+
 steps:
 # Step 1: Install the specified .NET SDK version
 - task: UseDotNet@2
+  displayName: 'Use DotNet SDK 8.x'
   inputs:
-    packageType: 'sdk'            # Install the .NET SDK (includes compilers and tools).
     version: '8.x'                # Specify the .NET SDK version to install (e.g., .NET 8.x).
-    installationPath: $(Agent.ToolsDirectory)/dotnet  # Path to install the SDK.
 
 # Step 2: Use GitVersion to generate version numbers
 - task: GitVersion@5
   inputs:
     configFilePath: 'gitversion.yml'  # Specify the path if not in the root
     updateAssemblyInfo: true  # Automatically update AssemblyInfo files
-  name: gitVersion  # Give a name to this task to reference its outputs later
+  name: GitVersion  # Give a name to this task to reference its outputs later
 
 # Step 3: Restore NuGet packages
 - script: |
