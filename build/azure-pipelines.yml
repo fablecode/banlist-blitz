@@ -24,6 +24,7 @@ workspace:
 
 # Define variables used throughout the pipeline
 variables:
+  System.Debug: true
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
