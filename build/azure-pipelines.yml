@@ -31,6 +31,9 @@ variables:
 
 
 steps:
+- checkout: self
+  fetchDepth: 0 # Disable shallow fetch
+
 # Step 1: Install the specified .NET SDK version
 - task: UseDotNet@2
   displayName: 'Use DotNet SDK 8.x'
@@ -42,7 +45,7 @@ steps:
   inputs:
     configFilePath: 'gitversion.yml'  # Specify the path if not in the root
     updateAssemblyInfo: true  # Automatically update AssemblyInfo files
-  name: GitVersion  # Give a name to this task to reference its outputs later
+  name: GitVersion  # Name this task to reference its outputs later
 
 # Step 3: Restore NuGet packages
 - script: |
