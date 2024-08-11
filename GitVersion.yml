@@ -1,0 +1,24 @@
+mode: Mainline
+branches:
+  main:
+    regex: (^master$|^origin\/master$|^main$|^origin\/main$)
+    tag: ''
+  feature:
+    regex: ^feature(s)?[/-]
+    tag: alpha
+    increment: Minor
+  users:
+    regex: ^user(s)?[/-]
+    tag: alpha
+    increment: Patch
+    source-branches:
+      - main
+  bugfix:
+    regex: ^bugfix(es)?[/-]
+    tag: beta
+    increment: Patch
+    source-branches:
+      - main
+ignore:
+  sha: []
+merge-message-formats: {}
