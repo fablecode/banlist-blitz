@@ -17,7 +17,7 @@ trigger:
     - README.md
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 workspace:
   clean: all # what to clean up before the job runs
@@ -27,8 +27,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
-
 
 steps:
 - checkout: self
