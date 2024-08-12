@@ -39,12 +39,13 @@ steps:
   inputs:
     version: '8.x'                # Specify the .NET SDK version to install (e.g., .NET 8.x).
 
-# Step 2: Use GitVersion to generate version numbers
-- task: GitVersion@5
-  inputs:
-    configFilePath: 'gitversion.yml'  # Specify the path if not in the root
-    updateAssemblyInfo: true  # Automatically update AssemblyInfo files
-  name: GitVersion  # Name this task to reference its outputs later
+# Step 1: Install the latest GitVersion global tool
+- script: dotnet tool install --global GitVersion.Tool
+  displayName: 'Install GitVersion Tool'
+
+# Step 2: Add GitVersion to the PATH
+- script: echo "##vso[task.setvariable variable=PATH]$(PATH):$(Agent.ToolsDirectory)/dotnet/tools"
+  displayName: 'Add GitVersion to PATH'
 
 # Step 3: Restore NuGet packages
 - script: |
