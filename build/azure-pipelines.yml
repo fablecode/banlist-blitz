@@ -48,6 +48,9 @@ steps:
     ignoreFailedSources: true
     preferLatestVersion: true
 
+- script: gitversion /output buildserver
+  displayName: 'Run GitVersion'
+  
 # Step 2: Generate Semantic Version
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
