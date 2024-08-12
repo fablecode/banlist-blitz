@@ -54,7 +54,6 @@ steps:
   inputs:
       useConfigFile: true
       configFilePath: 'GitVersion.yml'
-      updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
 - script: |
