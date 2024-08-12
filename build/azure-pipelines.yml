@@ -43,19 +43,13 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 # Step 1: Install the latest GitVersion global tool
-- task: gitversion/setup@3
-  displayName: Install GitVersion
-  inputs:
-    versionSpec: '6.x'
-    ignoreFailedSources: true
-    preferLatestVersion: true
+- script: dotnet tool install --global GitVersion.Tool --version 5.6.11
+  displayName: 'Install GitVersion.Tool'
 
-# Step 2: Generate Semantic Version
-- task: GitVersion@5
-  inputs:
-    configFilePath: 'gitversion.yml'  # Specify the path if not in the root
-    updateAssemblyInfo: true  # Automatically update AssemblyInfo files
-  name: gitVersion  # Give a name to this task to reference its outputs later
+- script: |
+    export PATH="$PATH:~/.dotnet/tools"
+    gitversion /output json /output buildserver
+  displayName: 'Run GitVersion with Global Tool'
 
 # Step 3: Restore NuGet packages
 - script: |
