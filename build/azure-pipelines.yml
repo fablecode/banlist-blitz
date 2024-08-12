@@ -40,9 +40,6 @@ steps:
   inputs:
     version: '8.x'                # Specify the .NET SDK version to install (e.g., .NET 8.x).
 
-- script: gitversion /output buildserver /verbosity debug
-  displayName: 'Run GitVersion with Debug Verbosity'
-
 # Step 1: Install the latest GitVersion global tool
 - task: gitversion/setup@3
   displayName: Install GitVersion
@@ -56,6 +53,8 @@ steps:
   displayName: 'Semantic Versioning'
   inputs:
       updateAssemblyInfo: true
+      useConfigFile: True
+      configFilePath: "GitVersion.yml"
 
 # Step 3: Restore NuGet packages
 - script: |
