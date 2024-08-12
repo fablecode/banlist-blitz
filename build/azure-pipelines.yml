@@ -50,7 +50,7 @@ steps:
     preferLatestVersion: true
 
 # Step 2: Generate Semantic Version
-- script: gitversion /output buildserver /verbosity debug
+- script: gitversion /output buildserver /verbosity diagnostic
   displayName: 'Run GitVersion'
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
