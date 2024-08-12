@@ -17,7 +17,7 @@ trigger:
     - README.md
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 workspace:
   clean: all # what to clean up before the job runs
