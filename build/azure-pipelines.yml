@@ -40,13 +40,13 @@ steps:
     version: '8.x'                # Specify the .NET SDK version to install (e.g., .NET 8.x).
 
 # Step 1: Install the latest GitVersion global tool
-- task: gitversion/setup@3.0.0
+- task: gitversion/setup@3
   displayName: Install GitVersion
   inputs:
     versionSpec: '6.x'
 
-# Step 2: Add GitVersion to the PATH
-- task: gitversion/execute@0
+# Step 2: Generate Semantic Version
+- task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
     updateAssemblyInfo: true
