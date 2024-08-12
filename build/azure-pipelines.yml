@@ -33,7 +33,7 @@ variables:
 steps:
 - checkout: self
   clean: true
-  fetchDepth: 0 # Disable shallow fetch
+  fetchDepth: 1 # Disable shallow fetch
 
 # Step 1: Install the specified .NET SDK version
 - task: UseDotNet@2
@@ -48,6 +48,8 @@ steps:
     versionSpec: '6.x'
     ignoreFailedSources: true
     preferLatestVersion: true
+
+- script: git fetch --unshallow --all
 
 # Step 2: Generate Semantic Version
 - task: gitversion/execute@3
