@@ -50,6 +50,7 @@ steps:
   displayName: 'Semantic Versioning'
   inputs:
     useConfigFile: true
+    configFilePath: 'GitVersion.yml'
     updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
