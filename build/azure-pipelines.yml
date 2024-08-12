@@ -33,7 +33,7 @@ variables:
 steps:
 - checkout: self
   clean: true
-  fetchDepth: 1 # Disable shallow fetch
+  fetchDepth: 0 # Disable shallow fetch
 
 # Step 1: Install the specified .NET SDK version
 - task: UseDotNet@2
