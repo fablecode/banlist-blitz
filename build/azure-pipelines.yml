@@ -51,8 +51,6 @@ steps:
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
-    targetPath: '$(Build.SourcesDirectory)'
-    useConfigFile: true
     updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
