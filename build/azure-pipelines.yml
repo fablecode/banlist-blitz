@@ -47,13 +47,7 @@ steps:
     ignoreFailedSources: true
     preferLatestVersion: true
 
-# Step 2: Generate Semantic Version
-- task: gitversion/execute@3
-  displayName: 'Semantic Versioning'
-  inputs:
-    useConfigFile: true
-    updateAssemblyInfo: true
-    configFilePath: './GitVersion.yml'
+
 
 # Step 3: Restore NuGet packages
 - script: |
@@ -67,6 +61,14 @@ steps:
     command: build
     projects: '$(solution)'
     arguments: '--configuration $(buildConfiguration)' # Update this to match your needs
+
+# Step 2: Generate Semantic Version
+- task: gitversion/execute@3
+  displayName: 'Semantic Versioning'
+  inputs:
+    useConfigFile: true
+    updateAssemblyInfo: true
+    configFilePath: './GitVersion.yml'
 
 # Step 6: Run NUnit tests with Coverlet for code coverage
 - task: DotNetCoreCLI@2
