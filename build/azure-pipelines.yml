@@ -51,7 +51,9 @@ steps:
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
+    useConfigFile: true
     updateAssemblyInfo: true
+    configFilePath: './GitVersion.yml'
 
 # Step 3: Restore NuGet packages
 - script: |
