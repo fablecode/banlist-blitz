@@ -1,6 +1,7 @@
 ﻿using BanlistBlitz.Domain;
 using BanlistBlitz.Processors;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using NUnit.Framework;
 
 namespace BanlistBlitz.Integration.Tests
@@ -25,12 +26,17 @@ namespace BanlistBlitz.Integration.Tests
             var result = await _sut.LoadBanlist(format);
 
             // Assert
-            result.Name.Should().NotBeNullOrWhiteSpace();
+            using (new AssertionScope())
+            {
+                result.Name.Should().NotBeNullOrWhiteSpace();
+                result.Format.Should().Be(format);
+                result.ReleaseDate.Should().BeMoreThan(default);
+            }
         }
 
         public static object[] FormatCases =
         {
-            //new object[] { Format.Tcg },
+            new object[] { Format.Tcg },
             new object[] { Format.Ocg },
         };
     }
