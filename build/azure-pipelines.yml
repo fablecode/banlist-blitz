@@ -43,14 +43,15 @@ steps:
 - task: gitversion/setup@3
   displayName: Install GitVersion
   inputs:
-    versionSpec: '6.x'
+    versionSpec: '5.x'
+    ignoreFailedSources: true
+    preferLatestVersion: true
 
 # Step 2: Generate Semantic Version
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
     useConfigFile: true
-    configFilePath: 'GitVersion.yml'
     updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
