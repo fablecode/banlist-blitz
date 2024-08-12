@@ -50,10 +50,15 @@ steps:
     preferLatestVersion: true
 
 # Step 2: Generate Semantic Version
+- script: |
+    export PATH="$PATH:~/.dotnet/tools"
+    gitversion /output json /output buildserver /verbosity debug
+  displayName: 'Run GitVersion with Debug Verbosity'
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
       updateAssemblyInfo: true
+
 
 # Step 3: Restore NuGet packages
 - script: |
