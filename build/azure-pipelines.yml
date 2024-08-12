@@ -51,8 +51,6 @@ steps:
 # Step 2: Generate Semantic Version
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
-  inputs:
-    updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
 - script: |
