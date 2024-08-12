@@ -2,20 +2,20 @@ mode: ContinuousDelivery
 branches:
   main:
     regex: (^master$|^origin\/master$|^main$|^origin\/main$)
-    tag: ''
+    label: ''
   feature:
     regex: ^feature(s)?[/-]
-    tag: alpha
+    label: alpha
     increment: Minor
   users:
     regex: ^user(s)?[/-]
-    tag: alpha
+    label: alpha
     increment: Patch
     source-branches:
       - main
   bugfix:
     regex: ^bugfix(es)?[/-]
-    tag: beta
+    label: beta
     increment: Patch
     source-branches:
       - main
