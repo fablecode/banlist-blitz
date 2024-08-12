@@ -28,6 +28,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  GitVersion.SemVer: ''
 
 steps:
 - checkout: self
@@ -49,8 +50,9 @@ steps:
 
 # Step 2: Generate Semantic Version
 - task: gitversion/execute@3
+  displayName: 'Semantic Versioning'
   inputs:
-    disableShallowCloneCheck: true
+    updateAssemblyInfo: true
 
 # Step 3: Restore NuGet packages
 - script: |
