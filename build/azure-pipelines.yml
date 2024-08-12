@@ -51,8 +51,11 @@ steps:
     preferLatestVersion: true
 
 # Step 2: Generate Semantic Version
-- task: gitversion/execute@3
-  displayName: 'Semantic Versioning'
+- task: GitVersion@5
+  inputs:
+    configFilePath: 'gitversion.yml'  # Specify the path if not in the root
+    updateAssemblyInfo: true  # Automatically update AssemblyInfo files
+  name: gitVersion  # Give a name to this task to reference its outputs later
 
 # Step 3: Restore NuGet packages
 - script: |
