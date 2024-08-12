@@ -28,9 +28,11 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  GitVersion.SemVer: ''
 
 steps:
 - checkout: self
+  clean: true
   fetchDepth: 0 # Disable shallow fetch
 
 # Step 1: Install the specified .NET SDK version
@@ -40,12 +42,19 @@ steps:
     version: '8.x'                # Specify the .NET SDK version to install (e.g., .NET 8.x).
 
 # Step 1: Install the latest GitVersion global tool
-- script: dotnet tool install --global GitVersion.Tool
-  displayName: 'Install GitVersion Tool'
+- task: gitversion/setup@3
+  displayName: Install GitVersion
+  inputs:
+    versionSpec: '6.x'
+    ignoreFailedSources: true
+    preferLatestVersion: true
 
-# Step 2: Add GitVersion to the PATH
-- script: echo "##vso[task.setvariable variable=PATH]$(PATH):$(Agent.ToolsDirectory)/dotnet/tools"
-  displayName: 'Add GitVersion to PATH'
+# Step 2: Generate Semantic Version
+- task: gitversion/execute@3
+  displayName: 'Semantic Versioning'
+  inputs:
+      useConfigFile: true
+      configFilePath: 'GitVersion.yml'
 
 # Step 3: Restore NuGet packages
 - script: |
@@ -53,14 +62,36 @@ steps:
   displayName: 'Restore NuGet Packages'
 
 # Step 4: Build the project targeting multiple frameworks
-- script: |
-    dotnet build --configuration $(buildConfiguration) --no-restore
-  displayName: 'Build Project'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)' # Update this to match your needs
+
+# Step 6: Run NUnit tests with Coverlet for code coverage
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests and Collect Code Coverage'
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+    publishTestResults: true
+    projects: '$(solution)' # update with your test project directory
 
 # Step 5: Run NUnit tests
-- script: |
-    dotnet test --configuration $(buildConfiguration) --no-build --verbosity normal
-  displayName: 'Run Tests'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '$(solution)'
+    publishTestResults: true
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage"'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 # Step 6: Create a NuGet package from the project
 - task: DotNetCoreCLI@2
