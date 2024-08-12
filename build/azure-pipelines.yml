@@ -50,10 +50,8 @@ steps:
     preferLatestVersion: true
 
 # Step 2: Generate Semantic Version
-- script: |
-    export PATH="$PATH:~/.dotnet/tools"
-    gitversion /output json /output buildserver /verbosity debug
-  displayName: 'Run GitVersion with Debug Verbosity'
+- script: gitversion /output buildserver /verbosity debug
+  displayName: 'Run GitVersion'
 - task: gitversion/execute@3
   displayName: 'Semantic Versioning'
   inputs:
