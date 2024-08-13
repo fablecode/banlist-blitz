@@ -7,9 +7,15 @@ branches:
     regex: ^feature(s)?[/-]
     label: alpha
     increment: Minor
+  refactor:
+    regex: ^refactor(ed)?[/-]
+    label: alpha
+    increment: Minor
+    source-branches:
+      - main
   users:
     regex: ^user(s)?[/-]
-    label: alpha
+    label: beta
     increment: Patch
     source-branches:
       - main
@@ -28,12 +34,6 @@ branches:
   chore:
     regex: ^chore(s)?[/-]
     label: beta
-    increment: Patch
-    source-branches:
-      - main
-  refactor:
-    regex: ^refactor(ed)?[/-]
-    label: alpha
     increment: Patch
     source-branches:
       - main
