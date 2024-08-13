@@ -10,8 +10,12 @@ trigger:
       - features/*
       - bugfix/*
       - bugfixes/*
-      - user/*
-      - users/*
+      - doc/*
+      - docs/*
+      - refactor/*
+      - chore/*
+      - test/*
+      - fix/*
   paths:
     exclude:
     - README.md
