@@ -4,9 +4,11 @@
 
 # Welcome to Banlist Blitz! 🚀
 
+
 Banlist Blitz is your ultimate companion for staying on top of the ever-changing Yu-Gi-Oh! banlists. Whether you're a duelist, a developer, or just a fan of the game, this tool is designed to make your Yu-Gi-Oh! experience more exciting and accessible.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+[![Build Status](https://dev.azure.com/fablecode/Yugioh/_apis/build/status%2Ffablecode.banlist-blitz?branchName=main)](https://dev.azure.com/fablecode/Yugioh/_build/latest?definitionId=22&branchName=main)
 [![NuGet](https://img.shields.io/nuget/v/BanlistBlitz.svg)](https://www.nuget.org/packages/BanlistBlitz/)
 
 ## ✨ Key Features
@@ -27,5 +29,23 @@ Banlist Blitz is your ultimate companion for staying on top of the ever-changing
 
 To unleash the power of Banlist Blitz in your .NET projects, simply conjure it from NuGet:
 
-```bash
-dotnet add package BanlistBlitz
+## NuGet
+
+    PM> Install-Package BanlistBlitz
+
+## Quickstart
+
+```csharp
+
+// Initialize BanlistBlitz
+IBanlistBlitz banlistblitz = new BanlistBlitz();
+
+// Retrieve banlist by format i.e. Tcg, Ocg
+Banlist articles = banlistblitz.LatestBanlist(Format.Tcg);
+
+```
+
+## License
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.

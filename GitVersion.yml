@@ -19,6 +19,23 @@ branches:
     increment: Patch
     source-branches:
       - main
+  doc:
+    regex: ^doc(s)?[/-]
+    label: beta
+    increment: Patch
+    source-branches:
+      - main
+  chore:
+    regex: ^chore(s)?[/-]
+    label: beta
+    increment: Patch
+    source-branches:
+      - main
+  refactor:
+    label: alpha
+    increment: Patch
+    source-branches:
+      - main
 ignore:
   sha: []
 merge-message-formats: {}
