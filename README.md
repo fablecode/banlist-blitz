@@ -1,14 +1,12 @@
 <div align="center">
-  <img src="banlist-blitz-logo.png" alt="Banlist Blitz Logo">
+  <img src="assets/logo/logo_128x128.png" alt="Banlist Blitz Logo">
 </div>
 
 # Welcome to Banlist Blitz! 🚀
-
+[![Build Status](https://dev.azure.com/fablecode/Yugioh/_apis/build/status%2Ffablecode.banlist-blitz?branchName=main)](https://dev.azure.com/fablecode/Yugioh/_build/latest?definitionId=22&branchName=main)
 
 Banlist Blitz is your ultimate companion for staying on top of the ever-changing Yu-Gi-Oh! banlists. Whether you're a duelist, a developer, or just a fan of the game, this tool is designed to make your Yu-Gi-Oh! experience more exciting and accessible.
 
-
-[![Build Status](https://dev.azure.com/fablecode/Yugioh/_apis/build/status%2Ffablecode.banlist-blitz?branchName=main)](https://dev.azure.com/fablecode/Yugioh/_build/latest?definitionId=22&branchName=main)
 [![NuGet](https://img.shields.io/nuget/v/BanlistBlitz.svg)](https://www.nuget.org/packages/BanlistBlitz/)
 
 ## ✨ Key Features
