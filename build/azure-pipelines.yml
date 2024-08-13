@@ -50,10 +50,8 @@ steps:
     preferLatestVersion: true
 
 # Step 3: Generate Semantic Version
-- script: dotnet-gitversion /output buildserver /verbosity diagnostic
-  displayName: 'Run GitVersion'
 - task: gitversion/execute@3
-  displayName: 'Semantic Versioning'
+  displayName: 'Run GitVersion'
   inputs:
       updateAssemblyInfo: true
 
@@ -80,10 +78,9 @@ steps:
     projects: '$(solution)' # update with your test project directory
 
 # Step 7: Publish Code Coverage
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   displayName: 'Publish code coverage report'
   inputs:
-    codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 # Step 8: Create a NuGet package from the project
@@ -103,4 +100,4 @@ steps:
     targetPath: '$(Build.ArtifactStagingDirectory)'  # Path to the package
     artifactName: 'nuget-package'  # Name of the artifact to publish
     publishLocation: 'pipeline'  # Publish location (pipeline scope)
-  displayName: 'Publish NuGet Package to Azure Artifacts'
+  displayName: 'Publish Artifacts'
