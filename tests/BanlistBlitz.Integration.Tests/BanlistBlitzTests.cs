@@ -23,7 +23,7 @@ namespace BanlistBlitz.Integration.Tests
             // Arrange
 
             // Act
-            var result = await _sut.LoadBanlist(format);
+            var result = await _sut.LatestBanlist(format);
 
             // Assert
             using (new AssertionScope())

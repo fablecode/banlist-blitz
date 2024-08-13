@@ -4,6 +4,6 @@ namespace BanlistBlitz
 {
     public interface IBanlistBlitz
     {
-        Task<Banlist> LoadBanlist(Format format);
+        Task<Banlist> LatestBanlist(Format format);
     }
 }

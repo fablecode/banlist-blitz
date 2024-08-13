@@ -8,7 +8,7 @@ public class BanlistBlitz : IBanlistBlitz
     private readonly IEnumerable<IFormatProcessor> _formatProcessors;
 
     public BanlistBlitz()
-        : this(new IFormatProcessor[] { new TcgFormatProcessor(), new OcgFormatProcessor() })
+        : this([new TcgFormatProcessor(), new OcgFormatProcessor()])
     {
         
     }
@@ -17,7 +17,7 @@ public class BanlistBlitz : IBanlistBlitz
     {
         _formatProcessors = formatProcessors;
     }
-    public Task<Banlist> LoadBanlist(Format format)
+    public Task<Banlist> LatestBanlist(Format format)
     {
         var handler = _formatProcessors.Single(h => h.Handles(format));
 
