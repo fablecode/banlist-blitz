@@ -1,56 +1,31 @@
-mode: ContinuousDeployment
 branches:
   main:
+    label: ''
+    increment: Patch
+    track-merge-target: true
     regex: ^main$|^master$
-    label: ''
-    increment: Patch
-    track-merge-target: true
-
-  master:
-    label: ''
-    increment: Patch
-    track-merge-target: true
-
   feature:
-    regex: ^feature[/-]
     label: 'alpha'
     increment: Inherit
-
-  bugfix:
-    regex: ^bugfix[/-]
-    label: 'beta'
-    increment: Patch
-
   hotfix:
-    regex: ^hotfix[/-]
     label: 'beta'
     increment: Patch
-
-  release:
-    regex: ^release[/-]
-    label: 'rc'
-    increment: Minor
-    track-merge-target: true
-
   refactor:
-    regex: ^refactor[/-]
-    label: 'refactor'
-    increment: Patch
-
-  doc:
-    regex: ^doc[/-]
-    label: 'doc'
-    increment: Patch
-
+    label: 'alpha'
+    increment: Minor
   chore:
-    regex: ^chore[/-]
-    label: 'chore'
+    label: 'beta'
+    increment: Patch
+  doc:
+    label: 'beta'
     increment: Patch
 
 ignore:
   sha: []
+
 commit-message-incrementing: Enabled
 tag-prefix: '[vV]'
+continuous-delivery-fallback-tag: 'ci'
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{WeightedPreReleaseNumber}'
 assembly-informational-format: '{FullSemVer} Branch: {BranchName} Sha: {Sha}'
