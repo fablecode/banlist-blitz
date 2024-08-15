@@ -55,6 +55,8 @@ steps:
     preferLatestVersion: true
 
 # Step 3: Generate Semantic Version
+- script: dotnet-gitversion /output buildserver /verbosity diagnostic
+  displayName: 'Run Debug GitVersion'
 - task: gitversion/execute@3
   displayName: 'Run GitVersion'
   inputs:
