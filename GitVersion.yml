@@ -3,7 +3,6 @@ branches:
     label: ''
     increment: Patch
     track-merge-target: true
-    regex: ^main$|^master$
   feature:
     label: 'alpha'
     increment: Inherit
