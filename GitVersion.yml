@@ -10,12 +10,15 @@ branches:
     label: 'beta'
     increment: Patch
   refactor:
+    regex: ^refactor[/-]
     label: 'alpha'
     increment: Minor
   chore:
+    regex: ^chore[/-]
     label: 'beta'
     increment: Patch
   doc:
+    regex: ^doc[/-]
     label: 'beta'
     increment: Patch
 
