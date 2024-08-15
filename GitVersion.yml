@@ -25,7 +25,6 @@ ignore:
 
 commit-message-incrementing: Enabled
 tag-prefix: '[vV]'
-continuous-delivery-fallback-tag: 'ci'
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{WeightedPreReleaseNumber}'
 assembly-informational-format: '{FullSemVer} Branch: {BranchName} Sha: {Sha}'
