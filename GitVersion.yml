@@ -1,43 +1,68 @@
-mode: ContinuousDelivery
-next-version: 1.0.0
+mode: ContinuousDeployment
 branches:
   main:
-    regex: (^master$|^origin\/master$|^main$|^origin\/main$)
-    label: ''
+    regex: ^main$|^master$
+    tag: ''
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
+
+  master:
+    tag: ''
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
+
   feature:
-    regex: ^feature(s)?[/-]
-    label: alpha
-    increment: Minor
-  refactor:
-    regex: ^refactor(ed)?[/-]
-    label: alpha
-    increment: Minor
-    source-branches:
-      - main
-  users:
-    regex: ^user(s)?[/-]
-    label: beta
-    increment: Patch
-    source-branches:
-      - main
+    regex: ^feature[/-]
+    tag: 'alpha'
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: true
+
   bugfix:
-    regex: ^bugfix(es)?[/-]
-    label: beta
+    regex: ^bugfix[/-]
+    tag: 'beta'
     increment: Patch
-    source-branches:
-      - main
+    prevent-increment-of-merged-branch-version: true
+
+  hotfix:
+    regex: ^hotfix[/-]
+    tag: 'beta'
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+
+  release:
+    regex: ^release[/-]
+    tag: 'rc'
+    increment: Minor
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
+
+  refactor:
+    regex: ^refactor[/-]
+    tag: 'refactor'
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+
   doc:
-    regex: ^doc(s)?[/-]
-    label: beta
+    regex: ^doc[/-]
+    tag: 'doc'
     increment: Patch
-    source-branches:
-      - main
+    prevent-increment-of-merged-branch-version: true
+
   chore:
-    regex: ^chore(s)?[/-]
-    label: beta
+    regex: ^chore[/-]
+    tag: 'chore'
     increment: Patch
-    source-branches:
-      - main
+    prevent-increment-of-merged-branch-version: true
+
 ignore:
   sha: []
-merge-message-formats: {}
+commit-message-incrementing: Enabled
+tag-prefix: '[vV]'
+
+versioning-mode: ContinuousDeployment
+continuous-delivery-fallback-tag: 'ci'
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{WeightedPreReleaseNumber}'
+assembly-informational-format: '{FullSemVer} Branch: {BranchName} Sha: {Sha}'
