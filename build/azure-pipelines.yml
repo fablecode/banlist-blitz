@@ -108,3 +108,12 @@ steps:
     artifactName: 'nuget-package'  # Name of the artifact to publish
     publishLocation: 'pipeline'  # Publish location (pipeline scope)
   displayName: 'Publish Artifacts'
+
+# Step 10: Publish the NuGet server
+- task: DotNetCoreCLI@2
+  displayName: 'Publish to Internal NuGET Feed'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '33deeca4-f254-4df3-9e74-83682799b1dd'
