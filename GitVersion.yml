@@ -2,57 +2,57 @@ mode: ContinuousDeployment
 branches:
   main:
     regex: ^main$|^master$
-    tag: ''
+    label: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   master:
-    tag: ''
+    label: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   feature:
     regex: ^feature[/-]
-    tag: 'alpha'
+    label: 'alpha'
     increment: Inherit
     prevent-increment-of-merged-branch-version: true
 
   bugfix:
     regex: ^bugfix[/-]
-    tag: 'beta'
+    label: 'beta'
     increment: Patch
     prevent-increment-of-merged-branch-version: true
 
   hotfix:
     regex: ^hotfix[/-]
-    tag: 'beta'
+    label: 'beta'
     increment: Patch
     prevent-increment-of-merged-branch-version: true
 
   release:
     regex: ^release[/-]
-    tag: 'rc'
+    label: 'rc'
     increment: Minor
     prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   refactor:
     regex: ^refactor[/-]
-    tag: 'refactor'
+    label: 'refactor'
     increment: Patch
     prevent-increment-of-merged-branch-version: true
 
   doc:
     regex: ^doc[/-]
-    tag: 'doc'
+    label: 'doc'
     increment: Patch
     prevent-increment-of-merged-branch-version: true
 
   chore:
     regex: ^chore[/-]
-    tag: 'chore'
+    label: 'chore'
     increment: Patch
     prevent-increment-of-merged-branch-version: true
 
@@ -60,7 +60,6 @@ ignore:
   sha: []
 commit-message-incrementing: Enabled
 tag-prefix: '[vV]'
-
 versioning-mode: ContinuousDeployment
 continuous-delivery-fallback-tag: 'ci'
 assembly-versioning-scheme: MajorMinorPatch
