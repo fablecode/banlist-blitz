@@ -4,57 +4,48 @@ branches:
     regex: ^main$|^master$
     label: ''
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   master:
     label: ''
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   feature:
     regex: ^feature[/-]
     label: 'alpha'
     increment: Inherit
-    prevent-increment-of-merged-branch-version: true
 
   bugfix:
     regex: ^bugfix[/-]
     label: 'beta'
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
 
   hotfix:
     regex: ^hotfix[/-]
     label: 'beta'
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
 
   release:
     regex: ^release[/-]
     label: 'rc'
     increment: Minor
-    prevent-increment-of-merged-branch-version: true
     track-merge-target: true
 
   refactor:
     regex: ^refactor[/-]
     label: 'refactor'
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
 
   doc:
     regex: ^doc[/-]
     label: 'doc'
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
 
   chore:
     regex: ^chore[/-]
     label: 'chore'
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
 
 ignore:
   sha: []
